@@ -3,7 +3,6 @@ const axios = require('axios');
 
 //CONNECTS MONGODB DATABASE TO APPLICATION 
 fetchCurrentSymbol = async (symbol) => {
-    console.log(process.env.BINANCE_BASE_STR);
     try {
         const result = await axios.get(`${process.env.BINANCE_BASE_STR}/ticker/price`, {
             params: {

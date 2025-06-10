@@ -6,7 +6,7 @@ require('dotenv').config();
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    
+
     if (!process.env.BINANCE_BASE_STR) {
         console.error('NO BINANCE BASE PROVIDED');
         return res.status(500).send({ msg: 'NO BINANCE BASE PROVIDED' });
@@ -16,10 +16,17 @@ router.get('/', async (req, res) => {
     }*/
 
     try {
-        await fetchCurrentSymbol('BTCUSDT');
-        const result = await axios.get(`${process.env.BINANCE_BASE_STR}/`);
+        const currentPrice = await fetchCurrentSymbol('BTCUSDT');
+        const result = await axios.get(`${process.env.BINANCE_BASE_STR}/klines`, {
+            params: {
+                symbol: 'BTCUSDT',
+                interval: '1w',
+            }
+        });
+        console.log(result);
     } catch (error) {
-
+        console.error('ERROR FETCHING HISTORICAL SYMBOL DATA: ', error.res?.data?.msg || error.message);
+        return res.status(500).send({ msg: `ERROR FETCHING HISTORICAL SYMBOL DATA:  ${error.res?.data?.msg || error.message}` });
     }
 });
 
