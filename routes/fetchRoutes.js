@@ -6,30 +6,36 @@ require('dotenv').config();
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    console.log(req.query);
     if (!process.env.BINANCE_BASE_STR) {
         console.error('NO BINANCE BASE PROVIDED');
-        return res.status(500).send({ msg: 'NO BINANCE BASE PROVIDED' });
+        return res.status(500).send({ success: false, msg: 'NO BINANCE BASE PROVIDED' });
     }
-    if (!req.query.startDate || !req.query.endDate || !req.query.symbol) {
-        return res.status(400).send({ msg: 'NO REQUIRED PARAMS' });
+    if (!req.query.startTime || !req.query.endTime || !req.query.symbol) {
+        return res.status(400).send({ success: false, msg: 'NO REQUIRED PARAMS' });
     }
-    console.log(new Date("2025-05-15").getTime());
-    console.log(new Date("2015-05-29").getTime());
     try {
-        const currentPrice = await fetchCurrentSymbol('BTCUSDT');
+        const currentPrice = await fetchCurrentSymbol(req.query.symbol);
         const result = await axios.get(`${process.env.BINANCE_BASE_STR}/klines`, {
             params: {
-                symbol: 'BTCUSDT',
+                symbol: req.query.symbol,
                 interval: '3d',
-                startTime: new Date("2025-05-15").getTime(),
-                endTime: new Date("2015-05-29").getTime()
+                startTime: req.query.startTime,
+                endTime: req.query.endTime
             }
         });
-        console.log(result.data);
+
+        if (result.data.length > 0) {
+            for (data of result.data) {
+                const high = 1 - (currentPrice / data[2]) * 100;
+                console.log(high);
+                const low = 1 - (currentPrice / data[3]) * 100;
+                console.log(low);
+            }
+        }
+        return res.status(200).send();
     } catch (error) {
         console.error('ERROR FETCHING HISTORICAL SYMBOL DATA: ', error.res?.data?.msg || error.message);
-        return res.status(500).send({ msg: `ERROR FETCHING HISTORICAL SYMBOL DATA:  ${error.res?.data?.msg || error.message}` });
+        return res.status(500).send({ success: false, msg: `ERROR FETCHING HISTORICAL SYMBOL DATA:  ${error.res?.data?.msg || error.message}` });
     }
 });
 

@@ -1,4 +1,3 @@
-const connectDB = require('./config/db');
 const express = require('express');
 const fetchRoutes = require('./routes/fetchRoutes');
 const bodyParser = require('body-parser');
@@ -6,7 +5,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-connectDB();
 
 app.use(express.json());
 app.use(bodyParser.json());
