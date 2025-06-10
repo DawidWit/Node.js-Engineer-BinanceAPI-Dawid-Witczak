@@ -9,7 +9,7 @@ fetchCurrentSymbol = async (symbol) => {
                 symbol
             }
         });
-        return parseFloat(result.price);
+        return parseFloat(result.data.price);
     } catch (error) {
         console.error('ERROR FETCHING CURRENT SYMBOL PRICE: ', error.res?.data?.msg || error.message);
         return null;
