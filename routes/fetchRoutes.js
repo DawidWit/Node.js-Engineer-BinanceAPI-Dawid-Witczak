@@ -23,12 +23,13 @@ router.get('/', async (req, res) => {
                 endTime: req.query.endTime
             }
         });
+        
         let output = [];
         if (result.data.length > 0) {
             for (data of result.data) {
                 const high = `${(data[2] / currentPrice * 100).toFixed(2)}%`;
                 const low = `${(data[3] / currentPrice * 100).toFixed(2)}%`;
-                const resStr = `From ${new Date(data[0]).toDateString()} to ${new Date(data[6]).toDateString()}, the lowest price  was ${low} of current price, and the highest was ${high} of the current price`;
+                const resStr = `From ${new Date(data[0]).toDateString()} to ${new Date(data[6]).toDateString()}, the lowest price was ${low} of current price, and the highest was ${high} of the current price`;
                 output.push(resStr);
                 console.log(resStr);
             }

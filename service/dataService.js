@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 
-//CONNECTS MONGODB DATABASE TO APPLICATION 
+//Fetches current price for symbol
 fetchCurrentSymbol = async (symbol) => {
     try {
         const result = await axios.get(`${process.env.BINANCE_BASE_STR}/ticker/price`, {

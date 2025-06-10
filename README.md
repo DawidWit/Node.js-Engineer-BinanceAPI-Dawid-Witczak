@@ -11,3 +11,9 @@ npm install
 ```bash
 npm run dev
 ```
+4. API endpoints:
+GET /api/historicalData - returns price analysis from specific start time to end time for a specific symbol
+REQUIRED PARAMS:
+symbol - string, a symbol of cryptocurrency
+startTime - integer, a start date of time range
+endTime - integer, a end date of time range
