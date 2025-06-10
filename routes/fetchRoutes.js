@@ -7,14 +7,17 @@ const router = express.Router();
 
 //Route for analysis
 router.get('/', async (req, res) => {
+    //Check if BINANCE_BASE_STR is in .env
     if (!process.env.BINANCE_BASE_STR) {
         console.error('NO BINANCE BASE PROVIDED');
         return res.status(500).send({ success: false, msg: 'NO BINANCE BASE PROVIDED' });
     }
+    //Check if all required parameters are present
     if (!req.query.startTime || !req.query.endTime || !req.query.symbol) {
         return res.status(400).send({ success: false, msg: 'NO REQUIRED PARAMS' });
     }
     try {
+        //Fetches current price for a symbol
         const currentPrice = await fetchCurrentSymbol(req.query.symbol);
         const result = await axios.get(`${process.env.BINANCE_BASE_STR}/klines`, {
             params: {
