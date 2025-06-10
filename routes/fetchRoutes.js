@@ -23,16 +23,17 @@ router.get('/', async (req, res) => {
                 endTime: req.query.endTime
             }
         });
-
+        let output = [];
         if (result.data.length > 0) {
             for (data of result.data) {
-                const high = 1 - (currentPrice / data[2]) * 100;
-                console.log(high);
-                const low = 1 - (currentPrice / data[3]) * 100;
-                console.log(low);
+                const high = `${(data[2] / currentPrice * 100).toFixed(2)}%`;
+                const low = `${(data[3] / currentPrice * 100).toFixed(2)}%`;
+                const resStr = `From ${new Date(data[0]).toDateString()} to ${new Date(data[6]).toDateString()}, the lowest price  was ${low} of current price, and the highest was ${high} of the current price`;
+                output.push(resStr);
+                console.log(resStr);
             }
         }
-        return res.status(200).send();
+        return res.status(200).send({ success: true, data: output });
     } catch (error) {
         console.error('ERROR FETCHING HISTORICAL SYMBOL DATA: ', error.res?.data?.msg || error.message);
         return res.status(500).send({ success: false, msg: `ERROR FETCHING HISTORICAL SYMBOL DATA:  ${error.res?.data?.msg || error.message}` });
