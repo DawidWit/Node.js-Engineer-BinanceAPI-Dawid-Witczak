@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
+//Route for analysis
 router.get('/', async (req, res) => {
     if (!process.env.BINANCE_BASE_STR) {
         console.error('NO BINANCE BASE PROVIDED');
@@ -23,7 +24,7 @@ router.get('/', async (req, res) => {
                 endTime: req.query.endTime
             }
         });
-        
+
         let output = [];
         if (result.data.length > 0) {
             for (data of result.data) {
