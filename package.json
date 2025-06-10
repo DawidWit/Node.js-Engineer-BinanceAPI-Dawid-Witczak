@@ -1,0 +1,24 @@
+{
+  "name": "node.js-engineer-binanceapi-dawid-witczak",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DawidWit/Node.js-Engineer-BinanceAPI-Dawid-Witczak.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DawidWit/Node.js-Engineer-BinanceAPI-Dawid-Witczak/issues"
+  },
+  "homepage": "https://github.com/DawidWit/Node.js-Engineer-BinanceAPI-Dawid-Witczak#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "mongoose": "^8.15.1"
+  }
+}
